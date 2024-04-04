@@ -14,7 +14,7 @@ DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
 
 
 import re, doctest
-
+from collections import Counter
 
 
 def validate1(s):
@@ -38,7 +38,6 @@ def validate1(s):
     # regex start with any alphabetic char that matches the sizes between 6-10, followed by 2 digits
     EMPLOYEE_RE = "^[a-zA-Z]{6,10}\\d{2}$"
     if re.search(EMPLOYEE_RE, s):
-        print(True)
         return True
     return False
 
@@ -94,9 +93,30 @@ def dna_prob(seq):
     >>> tbl['C']['G']
     0.5
     """
-    # You may use the collections module, but no other libraries.
-    ...
-    return ...
+    # assuming dna string size is >= 3
+    if len(seq) >= 3:
+        t = []
+        # pairwise
+        iterator = iter(seq)
+        a = next(iterator, None)
+        for b in iterator:
+            t.append(f'{a}{b}')
+            a = b
+        # count duplicate pairs
+        count = Counter(t)
+
+     # conditional probability table
+    tbl = {}
+    dna = ['A', 'C', 'G', 'T']
+    for b1 in dna:
+        tbl[b1] = {}
+        total = sum(count[b1 + b2] for b2 in dna)
+        for b2 in dna:
+            if total > 0:
+                tbl[b1][b2] = count[b1 + b2] / total
+            else:
+                tbl[b1][b2] = 0.0
+    return tbl
 
 
 def dna_bp(seq):
@@ -110,9 +130,8 @@ def dna_bp(seq):
     """
     # Do not use any libraries.
     # Hint: this can be done in one line. (More than one line is OK too.)
-    return ...
+    return seq.translate(str.maketrans('ATCG', 'TAGC'))
 
 if __name__=='__main__':
-    validate2('RQLp$CHz49')
-    
-     # This runs the doctests and prints any failures.
+    # This runs the doctests and prints any failures.
+    doctest.testmod()
