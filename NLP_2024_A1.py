@@ -55,9 +55,24 @@ def validate2(s):
     # if statements, loops, etc.
     # As far as a caller is concerned, this function should have the
     # same behavior as validate1().
-    ...
-    return ...
 
+    # split ID into 2 strings, first 6-10 chars second the 2 digits
+    t =[s[i:i+(len(s)-2)] for i in range(0, len(s), len(s)-2)]
+
+    # check for the first 6-10 chars if it contains any violations(digits, special chars)
+    if len(t[0]) >= 6 and len(t[0]) <= 10:
+        for i in t[0]:
+            if i.isdigit():
+                return False
+            elif not i.isalnum():
+                return False
+        
+        #check if last 2 chars in string are digits
+        if len(t[1]) == 2:
+            return t[1].isdigit()
+    else:
+         return False
+        
 
 def dna_prob(seq):
     """
@@ -98,6 +113,6 @@ def dna_bp(seq):
     return ...
 
 if __name__=='__main__':
-    validate1('RQLpCHz49')
+    validate2('RQLp$CHz49')
     
      # This runs the doctests and prints any failures.
