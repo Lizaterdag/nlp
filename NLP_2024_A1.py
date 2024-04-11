@@ -1,18 +1,4 @@
 #!/usr/bin/env python3
-
-"""
-ENLP A0: The Basics
-
-Usage: on the Unix command line,
-  python basics.py
-to run doctests. If all tests pass, the program will exit silently.
-
-@author: Nathan Schneider
-
-DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
-"""
-
-
 import re, doctest
 from collections import Counter
 
@@ -48,12 +34,6 @@ def validate2(s):
     >>> validate2('$0RQLpCHz49')
     False
     """
-    # Implement the validation another way, without using a regex or any libraries.
-    # You may use the .isalpha() and .isdigit() methods,
-    # variables, standard data structures such as lists,
-    # if statements, loops, etc.
-    # As far as a caller is concerned, this function should have the
-    # same behavior as validate1().
 
     # split ID into 2 strings, first 6-10 chars second the 2 digits
     t =[s[i:i+(len(s)-2)] for i in range(0, len(s), len(s)-2)]
